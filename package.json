@@ -1,0 +1,34 @@
+{
+  "name": "pouchStream",
+  "version": "0.0.0",
+  "description": "Experimental streaming version of PouchDB",
+  "main": "index.js",
+  "dependencies": {
+    "pouchdb": "~1.1.0"
+  },
+  "devDependencies": {
+    "chai": "~1.8.1",
+    "mocha": "~1.17.0",
+    "istanbul": "~0.2.3",
+    "pouchdb": "~1.1.0"
+  },
+  "scripts": {
+    "test": "./node_modules/istanbul/lib/cli.js test ./node_modules/mocha/bin/_mocha test/test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:calvinmetcalf/PouchStream.git"
+  },
+  "keywords": [
+    "pouch",
+    "stream",
+    "couch",
+    "db"
+  ],
+  "author": "Calvin Metcalf",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/calvinmetcalf/PouchStream/issues"
+  },
+  "homepage": "https://github.com/calvinmetcalf/PouchStream"
+}
