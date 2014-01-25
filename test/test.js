@@ -1,21 +1,29 @@
 var PouchDB = require("pouchdb");
-var should = require("chai").should;
+var should = require("chai").should();
 var PouchStream = require('../');
 
 describe('PouchStream', function(){
   var db;
-  function before(done){
-    new PouchDB('test', function(err, d){
+  beforeEach(function (done){
+    new PouchDB('_test', function(err, d){
         db = d;
         done(err);
     });
-  }
-  function after(done){
-    PouchDB.destroy('test', function(err){
+  });
+  afterEach(function (done){
+    PouchDB.destroy('_test', function(err){
       done(err);
     })
-  }
+  });
   it('should work', function(done){
-    done();
+    var stream = new PouchStream(db);
+    db.put({"_id":"lala","key":"value"}, function(){
+      stream.on('data', function(doc){
+        doc._id.should.equal('lala');
+        doc.key.should.equal('value');
+        done();
+      });
+      stream.read();
+    });
   });
 });
