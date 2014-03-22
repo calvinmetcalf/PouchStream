@@ -8,14 +8,8 @@
     "readable-stream": "^1.0.26-2",
     "pouchdb": "^2.0.1"
   },
-  "devDependencies": {
-    "chai": "~1.8.1",
-    "mocha": "~1.17.0",
-    "istanbul": "~0.2.3",
-    "pouchdb": "~1.1.0"
-  },
   "scripts": {
-    "test": "./node_modules/istanbul/lib/cli.js test ./node_modules/mocha/bin/_mocha test/test.js"
+    "test": "node test/test.js"
   },
   "repository": {
     "type": "git",
@@ -32,5 +26,9 @@
   "bugs": {
     "url": "https://github.com/calvinmetcalf/PouchStream/issues"
   },
-  "homepage": "https://github.com/calvinmetcalf/PouchStream"
+  "homepage": "https://github.com/calvinmetcalf/PouchStream",
+  "devDependencies": {
+    "tape": "^2.11.0",
+    "through2": "^0.4.1"
+  }
 }
