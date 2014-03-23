@@ -13,11 +13,12 @@ function PouchStream(db, opts) {
   });
   opts = opts || {};
   this.batchSize = opts.batchSize || 100;
-  if (typeof db === 'string') {
-    this.db = new PouchDB(db, opts);
+  if ('new_edits' in opts) {
+    this.opts = {new_edits : opts.new_eits};
   } else {
-    this.db = db;
+    this.opts = {};
   }
+  this.db = db;
   this.queue = [];
 }
 
@@ -34,7 +35,7 @@ PouchStream.prototype._flush = function (next) {
     docs: this.queue
   };
   this.queue = [];
-  this.db.bulkDocs(payload).then(function (resp) {
+  this.db.bulkDocs(payload, this.opts).then(function (resp) {
     resp.forEach(function (thing) {
       self.push(thing);
     });
