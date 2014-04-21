@@ -1,29 +1,29 @@
-var PouchDB = require("pouchdb");
-var should = require("chai").should();
-var PouchStream = require('../');
+'use strict';
 
-describe('PouchStream', function(){
-  var db;
-  beforeEach(function (done){
-    new PouchDB('_test', function(err, d){
-        db = d;
-        done(err);
+var PouchDB = require('pouchdb');
+var random = require('random-document-stream');
+var PouchStream = require('../');
+var test = require('tape');
+
+test('basic', function (t) {
+  var db = new PouchDB('testDB');
+  t.test('put stuff in', function (t) {
+    random(100).pipe(PouchStream.writable(db)).on('finish', function () {
+      t.end();
     });
   });
-  afterEach(function (done){
-    PouchDB.destroy('_test', function(err){
-      done(err);
-    })
+  t.test('put stuff in', function (t) {
+    var called = 0;
+    PouchStream.readable(db).on('data', function (d) {
+      called++;
+    }).on('end', function () {
+      t.equal(called, 100);
+      t.end();
+    });
   });
-  it('should work', function(done){
-    var stream = new PouchStream(db);
-    db.put({"_id":"lala","key":"value"}, function(){
-      stream.on('data', function(doc){
-        doc._id.should.equal('lala');
-        doc.key.should.equal('value');
-        done();
-      });
-      stream.read();
+  t.test('delete db', function (t) {
+    db.destroy(function () {
+      t.end();
     });
   });
 });
