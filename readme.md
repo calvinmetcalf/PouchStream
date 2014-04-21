@@ -14,6 +14,7 @@ var pouchStream = require('pouchStream');
 Writable
 ---
 
+note: the docs you give it can have _ids's or not and it will do post or put depending.
 
 ```js
 var db = new PouchDB('foo');
