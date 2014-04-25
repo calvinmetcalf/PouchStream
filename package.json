@@ -1,6 +1,6 @@
 {
   "name": "pouchStream",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Experimental streaming version of PouchDB",
   "main": "index.js",
   "repository": {
