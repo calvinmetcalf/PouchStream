@@ -1,5 +1,5 @@
 {
-  "name": "pouchStream",
+  "name": "pouch-stream",
   "version": "0.1.0",
   "description": "Experimental streaming version of PouchDB",
   "main": "index.js",
