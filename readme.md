@@ -14,7 +14,7 @@ var pouchStream = require('pouchStream');
 Writable
 ---
 
-note: the docs you give it can have _ids's or not and it will do post or put depending.
+note: the docs you give it can have _ids's or not and it will do post or put depending, you can also pass an array for bulk docs, it also takes an option object which will be passed verbatem to bulkDocs, put, or post.
 
 ```js
 var db = new PouchDB('foo');

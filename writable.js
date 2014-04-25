@@ -5,7 +5,7 @@ var Writable = require('readable-stream').Writable;
 module.exports = WriteStream;
 inherits(WriteStream, Writable);
 
-function WriteStream(db) {
+function WriteStream(db, opts) {
   if (!(this instanceof WriteStream)) {
     return new WriteStream(db);
   }
@@ -13,15 +13,20 @@ function WriteStream(db) {
     objectMode: true
   });
   this.db = db;
+  this.opts = opts || {};
 }
 
 WriteStream.prototype._write = function (chunk, _, next) {
-  if ('_id' in chunk) {
-    this.db.put(chunk).then(function () {
+  if (Array.isArray(chunk)) {
+    this.db.bulkDocs({docs: chunk}, this.opts).then(function () {
+      next();
+    }, next);
+  } else if ('_id' in chunk) {
+    this.db.put(chunk, this.opts).then(function () {
       next();
     }, next);
   } else {
-    this.db.post(chunk).then(function () {
+    this.db.post(chunk, this.opts).then(function () {
       next();
     }, next);
   }
