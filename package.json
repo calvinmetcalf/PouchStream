@@ -26,7 +26,7 @@
   "devDependencies": {
     "random-document-stream": "0.0.0",
     "tape": "^2.12.3",
-    "pouchdb": "git://github.com/pouchdb/pouchdb",
+    "pouchdb": "pouchdb/pouchdb",
     "through2": "^0.4.1"
   },
   "scripts": {
