@@ -57,3 +57,36 @@ test('batched', function (t) {
     });
   });
 });
+test('basic 2', function (t) {
+  var db = new PouchDB('testDB');
+  t.test('put stuff in', function (t) {
+    var changes = db.changes({
+      live: true
+    });
+    var called = 0;
+    changes.on('change', function () {
+      called++;
+    });
+    db.on('done', function () {
+      t.equal(called, 100);
+      t.end();
+    });
+    random(100).pipe(db);
+  });
+  t.test('take stuff out', function (t) {
+    var called = 0;
+    db.createReadStream().pipe(through(function (d, _, next) {
+      called++;
+      next();
+    }, function (next) {
+      t.equal(called, 100);
+      t.end();
+      next();
+    }));
+  });
+  t.test('delete db', function (t) {
+    db.destroy(function () {
+      t.end();
+    });
+  });
+});

@@ -26,13 +26,13 @@ stream.write({
   // chunk is flushed
 });
 ```
-quickly fill up a db with random docs with random-document-stream
+
+but wait there is more, the database itself is a write streem though you can't close it, you can do
+
 
 ```js
 var random = require("random-document-stream");
-random(100).pipe(db.createWriteStream()).on('end', function () {
-  //should now have 100 documents in it
-});
+random(100).pipe(db);
 ```
 
 Readable
