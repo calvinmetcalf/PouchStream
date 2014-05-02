@@ -8,7 +8,8 @@ npm install pouchStream
 ```
 
 ```js
-var pouchStream = require('pouchStream');
+var PouchStream = require('pouchStream');
+PouchDB.plugin(PouchStream);
 ```
 
 Writable
@@ -17,8 +18,7 @@ Writable
 note: the docs you give it can have _ids's or not and it will do post or put depending, you can also pass an array for bulk docs, it also takes an option object which will be passed verbatem to bulkDocs, put, or post.
 
 ```js
-var db = new PouchDB('foo');
-var stream = pouchStream.writable(db);
+var stream = db.createWriteStream();
 stream.write({
   foo: 'bar',
   _id: 'testDoc'
@@ -30,7 +30,7 @@ quickly fill up a db with random docs with random-document-stream
 
 ```js
 var random = require("random-document-stream");
-random(100).pipe(pouchStream.writable(db)).on('end', function () {
+random(100).pipe(db.createWriteStream()).on('end', function () {
   //should now have 100 documents in it
 });
 ```
@@ -40,7 +40,7 @@ Readable
 
 ```js
 var db = new PouchDB('foo');
-var stream = pouchStream.readable(db);
+var stream = db.createReadStream();
 stream.on('data', function (d) {
   // deal with data
 });
@@ -48,7 +48,7 @@ stream.on('data', function (d) {
 
 you can also set `since` 
 
-var stream = pouchStream.readable(db, 19);
+var stream = db.createReadStream({since:19});
 stream.on('data', function (d) {
   // deal with data after seq 19
 });
