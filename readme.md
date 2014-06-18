@@ -1,15 +1,14 @@
 Pouch Stream
 ====
 
-Experimental streaming version of PouchDB
+Streaming plugin for PouchDB
 
 ```bash
-npm install pouchStream
+npm install pouch-stream
 ```
 
 ```js
-var PouchStream = require('pouchStream');
-PouchDB.plugin(PouchStream);
+PouchDB.plugin(require('pouch-stream'));
 ```
 
 Writable
