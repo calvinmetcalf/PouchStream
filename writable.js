@@ -17,6 +17,16 @@ function WriteStream(db, opts) {
 }
 
 WriteStream.prototype._write = function (chunk, _, next) {
+  if (Buffer.isBuffer(chunk)) {
+    chunk = chunk.toString();
+  }
+  if (typeof chunk === 'string') {
+    try {
+      chunk = JSON.parse(chunk);
+    } catch (e) {
+      return next(e);
+    }
+  }
   if (Array.isArray(chunk)) {
     this.db.bulkDocs({docs: chunk}, this.opts).then(function () {
       next();

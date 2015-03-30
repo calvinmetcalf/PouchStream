@@ -1,6 +1,5 @@
 'use strict';
 var inherits = require('inherits');
-var extend = require('xtend');
 var Readable = require('readable-stream').Readable;
 
 module.exports = ReadStream;
@@ -13,11 +12,14 @@ function ReadStream(db, opts) {
   Readable.call(this, {
     objectMode: true
   });
-  this.opts = extend({
+  opts = opts || {};
+  var thisOpts = this.opts = {
     since: 0
-  }, opts, {
-    returnDocs: false
+  };
+  Object.keys(opts).forEach(function (key) {
+    thisOpts[key] = opts[key];
   });
+  this.opts.returnDocs = false;
   this.last = opts.since;
   this.db = db;
   this.changes = void 0;
@@ -48,4 +50,4 @@ ReadStream.prototype.cancel = function () {
   if (this.changes && typeof this.changes.cancel === 'function') {
     return this.changes.cancel();
   }
-}
+};
